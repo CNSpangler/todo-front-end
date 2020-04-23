@@ -6,12 +6,16 @@ export default class TodoApp extends Component {
     state = { todosArray: [] };
     
     componentDidMount = async() => {
-        const URL = 'https://cns-todo.herokuapp.com/api/todos';
-        const todosData = await request.get(URL);
-        console.log(todosData);
-        this.setState({ todosArray: todosData.body});
+        console.log('here');
+        
+        const user = JSON.parse(localStorage.getItem('user'));
+        const todosData = await request.get(`https://cns-todo.herokuapp.com/api/todos`)
+        .set('Authorization', user.token);
+        
+        console.log(todosData.body)
+        this.setState({ todosArray: todosData.body })
     };
-
+    
     render() {    
         return (
             <ul>
